@@ -1,5 +1,5 @@
 FROM alpine:3.18.3
 
-COPY . .
+COPY entrypoint.sh /entrypoint.sh
 
-ENTRYPOINT [ "entrypoint.sh" ]
+ENTRYPOINT ["/entrypoint.sh"]
