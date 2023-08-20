@@ -21,4 +21,4 @@ RESP="$(curl -X POST \
     https://kypp7qtc6b.execute-api.us-east-1.amazonaws.com/services)"
 echo "Response: $RESP"
 
-echo "$RESP" >> "$GITHUB_OUTPUT"
+echo "$RESP" | jq -r 'to_entries[] | "\(.key)=\(.value)"' >> "$GITHUB_OUTPUT"

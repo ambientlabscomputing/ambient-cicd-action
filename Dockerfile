@@ -9,4 +9,7 @@ RUN chmod +x /entrypoint-local.sh
 # install curl
 RUN apk add --no-cache curl
 
+# install jq to parse json
+RUN apk add --no-cache jq
+
 ENTRYPOINT ["/entrypoint.sh"]
