@@ -72,7 +72,18 @@ with:
   image: 'docker-image-to-deploy'
   replicas: 'number-of-replicas-to-deploy'
   token: 'your-ambient-token'
+  organization: 'your-organization-id'
 ```
 
+## To test locally
 
-Make sure to replace `'ambient-labs/ambient-labs-ci-cd-action@v1'` with the actual GitHub path to your action. Also, you might want to update the version tag as needed. Feel free to ask if you need further adjustments or clarifications!
+```bash
+docker build . -t actions-test:latest
+docker run -it --entrypoint /bin/sh actions-test:latest
+```
+
+Once in the container's shell, you can run the `entrypoint.sh` script to test the action locally:
+
+```bash
+/entrypoint-local.sh
+```

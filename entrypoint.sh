@@ -1,9 +1,11 @@
-#!/bin/bash
+#!/bin/sh
+
 NAME=$1
 DESC=$2
 IMAGE=$3
 REPLICAS=$4
 TOKEN=$5
+ORG=$6
 
 echo "Creating service $NAME"
 echo "Description: $DESC"
@@ -14,8 +16,9 @@ echo "Replicas: $REPLICAS"
 RESP="$(curl -X POST \
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer $TOKEN" \
+    -H "X-Org-Id: $ORG" \
     -d "{\"name\":\"$NAME\",\"description\":\"$DESC\",\"image\":\"$IMAGE\",\"replicas\":$REPLICAS}" \
-    http://localhost:8080/services)"
+    https://kypp7qtc6b.execute-api.us-east-1.amazonaws.com/services)"
 echo "Response: $RESP"
 
 echo "$RESP" >> "$GITHUB_OUTPUT"
