@@ -16,7 +16,6 @@ echo "Replicas: $REPLICAS"
 RESP="$(curl -X POST \
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer $TOKEN" \
-    -H "X-Org-Id: $ORG" \
     -d "{\"name\":\"$NAME\",\"description\":\"$DESC\",\"image\":\"$IMAGE\",\"replicas\":$REPLICAS}" \
     https://kypp7qtc6b.execute-api.us-east-1.amazonaws.com/services)"
 echo "Response: $RESP"

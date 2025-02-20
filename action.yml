@@ -2,50 +2,42 @@
 name: 'Ambient Labs CI/CD Action'
 description: 'Allows deployment of docker applications to the Edge using Ambient Labs CI/CD services'
 inputs:
-  name:
-    description: 'service name'
-    required: true
-  description:
-    description: 'service description'
-    required: true
-  image:
-    description: 'docker image to deploy'
-    required: true
-  replicas:
-    description: 'number of replicas to deploy'
-    required: true
-  organization:
-    description: 'service organization ID'
-    required: true
   token:
-    description: 'Ambient Labs API token'
+    description: 'Token for Ambient Labs CI/CD'
     required: true
+  command:
+    description: 'Command to execute'
+    required: true
+  timeout:
+    description: 'Timeout for command'
+    required: false
+  node_ids:
+    description: 'Node IDs to execute command on'
+    required: false
+  tags:
+    description: 'Tags to execute command on'
+    required: false
+  store_output:
+    description: 'Whether to store output'
+    required: false
 outputs:
-  name:
-    description: 'service name'
-  description:
-    description: 'service description'
-  image:
-    description: 'docker image to deploy'
-  replicas:
-    description: 'number of replicas to deploy'
-  compose_location:
-    description: 'docker compose file (not yet implemented)'
-  identifier:
-    description: 'service Amient identifier'
-  organization:
-    description: 'service organization'
-  resource_type:
-    description: 'service resource type'
-  status:
-    description: 'service status'
+  command:
+    description: 'Command to execute'
+  timeout:
+    description: 'Timeout for command'
+  node_ids:
+    description: 'Node IDs to execute command on'
+  tags:
+    description: 'Tags to execute command on'
+  store_output:
+    description: 'Whether to store output'
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.name }}
-    - ${{ inputs.description }}
-    - ${{ inputs.image }}
-    - ${{ inputs.replicas }}
     - ${{ inputs.token }}
-    - ${{ inputs.organization }}
+    - ${{ inputs.command }}
+    - ${{ inputs.timeout }}
+    - ${{ inputs.node_ids }}
+    - ${{ inputs.tags }}
+    - ${{ inputs.store_output }}
