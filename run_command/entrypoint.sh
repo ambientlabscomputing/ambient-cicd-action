@@ -25,7 +25,7 @@ echo "START TIME: $(date)"
 
 command="python /src/main.py \
     --token $TOKEN \
-    --command $COMMAND \
+    --command "$COMMAND" \
     --timeout $TIMEOUT \
     --node_names $NODE_NAMES \
     --node_tags $NODE_TAGS \
