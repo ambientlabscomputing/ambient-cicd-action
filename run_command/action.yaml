@@ -1,0 +1,47 @@
+# action.yml
+name: 'Ambient Labs CI/CD Action'
+description: 'Allows running commands on the Edge using Ambient Labs CI/CD services'
+inputs:
+  token:
+    description: 'Token for Ambient Labs CI/CD'
+    required: true
+  command:
+    description: 'Command to execute'
+    required: true
+  timeout:
+    description: 'Timeout for command'
+    required: false
+  node_names:
+    description: 'Node IDs to execute command on'
+    required: false
+  node_tags:
+    description: 'Tags to execute command on'
+    required: false
+  cluster_names:
+    description: 'Cluster names to execute command on'
+    required: false
+  cluster_tags:
+    description: 'Tags to execute command on'
+    required: false
+  cluster_run_type:
+    description: 'Type of cluster run'
+    required: false
+outputs:
+  command:
+    description: 'Command to execute'
+  command_id:
+    description: 'Command ID'
+  results:
+    description: 'Results of command'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.token }}
+    - ${{ inputs.command }}
+    - ${{ inputs.timeout }}
+    - ${{ inputs.node_names }}
+    - ${{ inputs.node_tags }}
+    - ${{ inputs.cluster_names }}
+    - ${{ inputs.cluster_tags }}
+    - ${{ inputs.cluster_run_type }}
