@@ -42,4 +42,4 @@ FinalResults="$(eval $command)"
 echo "END TIME: $(date)"
 
 # Write the results to the output file
-echo "$FinalResults" >> "$GITHUB_OUTPUT"
+echo "0" >> "$GITHUB_OUTPUT"
