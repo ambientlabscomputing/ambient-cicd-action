@@ -41,11 +41,7 @@ def run_command(token: str, command: str, timeout: int = 0, node_names: List[str
     outputs = utils.wait_for_command_completion(token, command_id, timeout=int(timeout))
     logger.info(outputs)
 
-    final_results = {
-        "command": command,
-        "command_id": command_id,
-        "outputs": outputs
-    }
+    final_results = f"command={command},command_id={command_id},outputs={outputs}"
 
     print(final_results)
     if isinstance(outputs, Exception):
