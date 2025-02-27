@@ -17,6 +17,9 @@ NODE_TAGS=$5
 CLUSTER_NAMES=$6
 CLUSTER_TAGS=$7
 CLUSTER_RUN_TYPE=$8
+WORKDIR=$9
+OS_USER=${10}
+ENV_VARS=${11}
 
 echo "Running command: $COMMAND"
 echo "Timeout: $TIMEOUT"
@@ -31,7 +34,10 @@ command="python /src/main.py \
     --node_tags $NODE_TAGS \
     --cluster_names $CLUSTER_NAMES \
     --cluster_tags $CLUSTER_TAGS \
-    --cluster_run_type $CLUSTER_RUN_TYPE\
+    --cluster_run_type $CLUSTER_RUN_TYPE \
+    --workdir $WORKDIR \
+    --os_user $OS_USER \
+    --env_vars "$ENV_VARS"
 "
 
 echo "Running command: $command"

@@ -3,26 +3,40 @@ import requests
 import os
 import time
 from loguru import logger
+import shlex
 
 API_URL = os.environ.get("API_URL", "https://api.ambientlabs.io")
 INTERVAL = os.environ.get("INTERVAL", 5)
 
 def call_run_command_api(
-    token: str, command: str, timeout: int = 0, node_names: List[str] = [], node_tags:  List[str] = [], cluster_names:  List[str] = [], cluster_tags:  List[str] = [], cluster_run_type: str | None = None
+    token: str,
+    command: str,
+    timeout: int = 0,
+    node_names: List[str] = [],
+    node_tags:  List[str] = [],
+    cluster_names:  List[str] = [],
+    cluster_tags:  List[str] = [],
+    cluster_run_type: str | None = None,
+    workdir: str | None = None,
+    os_user: str | None = None,
+    env_vars: dict | None = None
 ) -> requests.Response:
     url = f"{API_URL}/commands/"
     headers = {
         "Authorization": f"Bearer {token}"
     }
     data = {
-        "command": command.split(" "),
+        "command": shlex.split(command),
         "timeout": timeout,
         "node_names": node_names,
         "node_tags": node_tags,
         "cluster_names": cluster_names,
         "cluster_tags": cluster_tags,
         "cluster_run_type": cluster_run_type,
-        "store_output": True
+        "store_output": True,
+        "workdir": workdir,
+        "os_user": os_user,
+        "env_vars": env_vars
     }
     response = requests.post(url, headers=headers, json=data)
     logger.info("response text: ", response.text)
