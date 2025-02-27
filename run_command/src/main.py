@@ -1,11 +1,12 @@
-import click
 import os
-import sys
-import utils
 from typing import List
+
+import click
+import utils
 from loguru import logger
 
 API_URL = os.environ.get("API_URL", "https://api.ambientlabs.io")
+
 
 # token
 # command
@@ -24,11 +25,45 @@ API_URL = os.environ.get("API_URL", "https://api.ambientlabs.io")
 @click.option("--cluster_names", help="cluster_names")
 @click.option("--cluster_tags", help="cluster_tags")
 @click.option("--cluster_run_type", help="cluster_run_type")
-def run_command(token: str, command: str, timeout: int = 0, node_names: List[str] = [], node_tags:  List[str] = [], cluster_names:  List[str] = [], cluster_tags:  List[str] = [], cluster_run_type: str | None = None):
-    logger.debug(f"run_command() - API_URL: {API_URL}")
+@click.option("--workdir", help="workdir")
+@click.option("--os_user", help="os_user")
+@click.option("--env_vars", help="env_vars", default=None, type=str)
+def run_command(
+    token: str,
+    command: str,
+    timeout: int = 0,
+    node_names: List[str] = [],
+    node_tags: List[str] = [],
+    cluster_names: List[str] = [],
+    cluster_tags: List[str] = [],
+    cluster_run_type: str | None = None,
+    workdir: str | None = None,
+    os_user: str | None = None,
+    env_vars: str | None = None,
+):
+    logger.debug("api_url: {}", API_URL)
     logger.info("Calling run_command API")
+    env_dict = None
+    if env_vars:
+        logger.debug("parsing env_vars: {}", env_vars)
+        env_dict = {}
+        env_vars_list = env_vars.split(",")
+        for var in env_vars_list:
+            key, value = var.split("=")
+            env_dict[key] = value
+        logger.debug("env_dict: {}", env_dict)
     response = utils.call_run_command_api(
-        token, command, timeout, node_names, node_tags, cluster_names, cluster_tags, cluster_run_type
+        token,
+        command,
+        timeout,
+        node_names,
+        node_tags,
+        cluster_names,
+        cluster_tags,
+        cluster_run_type,
+        workdir,
+        os_user,
+        env_dict,
     )
     command_data: dict = response.json()
 

@@ -11,6 +11,15 @@ inputs:
   timeout:
     description: 'Timeout for command'
     required: false
+  workdir:
+    description: 'Directory to execute command in'
+    required: false
+  os_user:
+    description: 'OS user to execute command as'
+    required: false
+  env_vars:
+    description: 'Environment variables to set in json format'
+    required: false
   node_names:
     description: 'Node IDs to execute command on'
     required: false
@@ -45,3 +54,6 @@ runs:
     - ${{ inputs.cluster_names }}
     - ${{ inputs.cluster_tags }}
     - ${{ inputs.cluster_run_type }}
+    - ${{ inputs.workdir }}
+    - ${{ inputs.os_user }}
+    - ${{ inputs.env_vars }}
