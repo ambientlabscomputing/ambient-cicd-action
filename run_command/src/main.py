@@ -1,13 +1,12 @@
-import click
 import os
-import sys
-import utils
 from typing import List
-from loguru import logger
-import json
 
+import click
+import utils
+from loguru import logger
 
 API_URL = os.environ.get("API_URL", "https://api.ambientlabs.io")
+
 
 # token
 # command
@@ -29,17 +28,18 @@ API_URL = os.environ.get("API_URL", "https://api.ambientlabs.io")
 @click.option("--workdir", help="workdir")
 @click.option("--os_user", help="os_user")
 @click.option("--env_vars", help="env_vars", default=None, type=str)
-def run_command(token: str,
+def run_command(
+    token: str,
     command: str,
     timeout: int = 0,
     node_names: List[str] = [],
-    node_tags:  List[str] = [],
-    cluster_names:  List[str] = [],
-    cluster_tags:  List[str] = [],
+    node_tags: List[str] = [],
+    cluster_names: List[str] = [],
+    cluster_tags: List[str] = [],
     cluster_run_type: str | None = None,
     workdir: str | None = None,
     os_user: str | None = None,
-    env_vars: str | None = None
+    env_vars: str | None = None,
 ):
     logger.debug("api_url: {}", API_URL)
     logger.info("Calling run_command API")
@@ -53,7 +53,17 @@ def run_command(token: str,
             env_dict[key] = value
         logger.debug("env_dict: {}", env_dict)
     response = utils.call_run_command_api(
-        token, command, timeout, node_names, node_tags, cluster_names, cluster_tags, cluster_run_type, workdir, os_user, env_dict
+        token,
+        command,
+        timeout,
+        node_names,
+        node_tags,
+        cluster_names,
+        cluster_tags,
+        cluster_run_type,
+        workdir,
+        os_user,
+        env_dict,
     )
     command_data: dict = response.json()
 

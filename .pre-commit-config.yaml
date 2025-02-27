@@ -1,0 +1,58 @@
+repos:
+  # ISORT
+  - repo: https://github.com/pycqa/isort
+    rev: 6.0.0
+    hooks:
+    - id: isort
+      name: isort
+      files: ^run_command/[a-z_]+/.*\.py$
+      args: 
+        - "--profile=black"
+        - "--known-local-folder=app_api"
+
+  # AUTOFLAKE
+  - repo: https://github.com/PyCQA/autoflake
+    rev: v2.3.1
+    hooks:
+    - id: autoflake
+      name: autoflake
+      files: ^run_command/[a-z_]+/.*\.py$
+
+  # FLAKE8
+  - repo: https://github.com/PyCQA/flake8
+    rev: 7.1.2
+    hooks:
+    - id: flake8
+      name: flake8
+      files: ^run_command/[a-z_]+/.*\.py$
+      args: [--max-line-length=88]
+
+  # BLACK
+  - repo: https://github.com/psf/black
+    rev: 25.1.0
+    hooks:
+    - id: black
+      language_version: python3.11
+      # files: ^run_command/[a-z_]+/.*\.py$
+      files: ^run_command/[a-z_]+/.*\.py$
+
+  # MYPY
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.15.0
+    hooks:
+    - id: mypy
+      name: mypy
+      files: ^run_command/[a-z_]+/.*\.py$
+      args:
+        - "--explicit-package-bases"
+        - "--ignore-missing-imports"
+        - "--follow-imports=skip"
+        - "--strict-optional"
+        - "--warn-redundant-casts"
+        - "--warn-unused-configs"
+        - "--no-implicit-optional"
+        - "--show-error-codes"
+        - "--pretty"
+        - "--disable-error-code=union-attr"
+        - "--disable-error-code=valid-type"
+        - "--disable-error-code=import-untyped"
