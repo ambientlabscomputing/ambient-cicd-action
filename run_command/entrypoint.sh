@@ -27,6 +27,14 @@ echo "Timeout: $TIMEOUT"
 
 echo "START TIME: $(date)"
 
+if [ -z "$SHELL" ]; then
+    SHELL="false"
+fi
+
+if [ -z "$CLUSTER_RUN_TYPE" ]; then
+    CLUSTER_RUN_TYPE="all"
+fi
+
 command="python /src/main.py \
     --token $TOKEN \
     --command '$COMMAND' \
