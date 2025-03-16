@@ -35,6 +35,10 @@ if [ -z "$CLUSTER_RUN_TYPE" ]; then
     CLUSTER_RUN_TYPE="all"
 fi
 
+if [ -z "$NODE_TAGS" ]; then
+    NODE_TAGS=""
+fi
+
 command="python /src/main.py \
     --token $TOKEN \
     --command '$COMMAND' \
