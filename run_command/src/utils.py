@@ -1,5 +1,5 @@
+import json
 import os
-import shlex
 import time
 from typing import List
 
@@ -12,7 +12,7 @@ INTERVAL = int(os.environ.get("INTERVAL", 5))
 
 def call_run_command_api(
     token: str,
-    command: str,
+    command: str | List[str],
     timeout: int = 0,
     node_names: List[str] = [],
     node_tags: List[str] = [],
@@ -22,24 +22,29 @@ def call_run_command_api(
     workdir: str | None = None,
     os_user: str | None = None,
     env_vars: dict | None = None,
+    shell: bool = False,
 ) -> requests.Response:
     url = f"{API_URL}/commands/"
     headers = {"Authorization": f"Bearer {token}"}
     data = {
-        "command": shlex.split(command),
+        "command": command,
         "timeout": timeout,
-        "node_names": node_names,
-        "node_tags": node_tags,
-        "cluster_names": cluster_names,
-        "cluster_tags": cluster_tags,
-        "cluster_run_type": cluster_run_type,
+        "node_options": {"node_names": node_names, "tags": node_tags},
         "store_output": True,
         "workdir": workdir,
         "os_user": os_user,
         "env_vars": env_vars,
+        "shell": shell,
     }
+    if cluster_names or cluster_tags:
+        data["cluster_options"] = {
+            "cluster_names": cluster_names,
+            "tags": cluster_tags,
+            "run_type": cluster_run_type,
+        }
+    logger.debug("Request body: {}", json.dumps(data, indent=4))
     response = requests.post(url, headers=headers, json=data)
-    logger.info("response text: ", response.text)
+    logger.info("response text: {}", response.text)
     response.raise_for_status()
     return response
 
