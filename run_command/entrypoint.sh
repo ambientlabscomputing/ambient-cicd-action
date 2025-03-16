@@ -43,8 +43,8 @@ command="python /src/main.py \
     --token $TOKEN \
     --command '$COMMAND' \
     --timeout $TIMEOUT \
-    --node_names $NODE_NAMES \
-    --node_tags $NODE_TAGS \
+    --node_names '$NODE_NAMES' \
+    --node_tags '$NODE_TAGS' \
     --cluster_names '$CLUSTER_NAMES' \
     --cluster_tags '$CLUSTER_TAGS' \
     --cluster_run_type $CLUSTER_RUN_TYPE \
