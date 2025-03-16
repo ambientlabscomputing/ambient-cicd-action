@@ -1,5 +1,4 @@
 import os
-from typing import List
 
 import click
 import utils
@@ -28,26 +27,46 @@ API_URL = os.environ.get("API_URL", "https://api.ambientlabs.io")
 @click.option("--workdir", help="workdir")
 @click.option("--os_user", help="os_user")
 @click.option("--env_vars", help="env_vars", default=None, type=str)
+@click.option(
+    "--shell", help="Whether to run the command in shell", default=False, type=bool
+)
 def run_command(
     token: str,
     command: str,
     timeout: int = 0,
-    node_names: List[str] = [],
-    node_tags: List[str] = [],
-    cluster_names: List[str] = [],
-    cluster_tags: List[str] = [],
+    node_names: str | None = None,
+    node_tags: str | None = None,
+    cluster_names: str | None = None,
+    cluster_tags: str | None = None,
     cluster_run_type: str | None = None,
     workdir: str | None = None,
     os_user: str | None = None,
     env_vars: str | None = None,
+    shell: bool = False,
 ):
     logger.debug("api_url: {}", API_URL)
     logger.info("Calling run_command API")
+    if not shell:
+        command = command.split(",")  # type: ignore
+    if node_names:
+        node_names = node_names.split(",")  # type: ignore
+    if node_tags:
+        node_tags = node_tags.split(",")  # type: ignore
+    else:
+        node_tags = []  # type: ignore
     env_dict = None
+    if not cluster_names:
+        cluster_names = []  # type: ignore
+    else:
+        cluster_names = cluster_names.split(",")  # type: ignore
+    if not cluster_tags:
+        cluster_tags = []  # type: ignore
+    else:
+        cluster_tags = cluster_tags.split(",")  # type: ignore
     if env_vars:
         logger.debug("parsing env_vars: {}", env_vars)
         env_dict = {}
-        env_vars_list = env_vars.split(",")
+        env_vars_list = env_vars.split(",")  # type: ignore
         for var in env_vars_list:
             key, value = var.split("=")
             env_dict[key] = value
@@ -64,6 +83,7 @@ def run_command(
         workdir,
         os_user,
         env_dict,
+        shell,
     )
     command_data: dict = response.json()
 

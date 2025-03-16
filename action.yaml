@@ -35,6 +35,9 @@ inputs:
   cluster_run_type:
     description: 'Type of cluster run'
     required: false
+  shell:
+    description: 'Whether to run in shell mode'
+    required: false
 outputs:
   command:
     description: 'Command to execute'
@@ -57,3 +60,4 @@ runs:
     - ${{ inputs.workdir }}
     - ${{ inputs.os_user }}
     - ${{ inputs.env_vars }}
+    - ${{ inputs.shell }}
