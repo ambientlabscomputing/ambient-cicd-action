@@ -50,7 +50,7 @@ command="python /src/main.py \
     --cluster_run_type $CLUSTER_RUN_TYPE \
     --workdir $WORKDIR \
     --os_user $OS_USER \
-    --env_vars "$ENV_VARS" \
+    --env_vars '$ENV_VARS' \
     --shell $SHELL
 "
 
